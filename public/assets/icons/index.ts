@@ -1,0 +1,5 @@
+export { default as PlayArrowIcon } from './play-arrow.svg'
+export { default as PauseIcon } from './pause.svg'
+export { default as RedoIcon } from './redo.svg'
+export { default as SettingsIcon } from './settings.svg'
+export { default as StopwatchIcon } from './stopwatch.svg'
