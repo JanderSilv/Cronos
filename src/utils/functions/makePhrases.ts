@@ -5,23 +5,23 @@ const phrases = {
     ending: 'A manhã está acabando, espero que tenha sido produtiva'
   },
   lunch: {
-    starting: 'Está na hora do almoço',
-    startingWorking: 'Já almoçou?',
+    starting: 'Tenha um ótimo almoço!',
+    startingWorking: 'Trabalhando em horário de almoço?',
     ending: 'Almoço acabando, estava gostoso?'
   },
   afternoon: {
-    starting: 'Tenha uma boa tarde',
+    starting: 'Tenha uma ótima tarde!',
     startingWorking:
       'Começou o trabalho atrasado? Ainda da tempo de correr atrás',
     ending: 'Dia de trabalho chegando ao fim'
   },
   night: {
-    starting: 'Tenha uma boa noite',
+    starting: 'Tenha uma ótima noite!',
     startingWorking: 'Dia puxado? Vamos trabalhar',
     ending: 'Bons sonhos!'
   },
   daybreak: {
-    starting: 'Tenha uma boa madrugada',
+    starting: 'Tenha uma ótima madrugada!',
     startingWorking: 'Mais produtivo de madrugada?',
     ending: 'O dia está amanhecendo'
   }
@@ -32,7 +32,7 @@ const makePhrases = (
   status: number,
   hour: number,
   minute: number
-) => {
+): string => {
   if (!period) return ''
 
   const auxPeriod = period.toLowerCase()
@@ -41,7 +41,7 @@ const makePhrases = (
     else if (status === 1) return phrases.morning.startingWorking
     else return phrases.morning.starting
   } else if (auxPeriod === 'bom almoço') {
-    if (hour === 12 && minute >= 40) return phrases.lunch.ending
+    if (hour === 13 && minute >= 40) return phrases.lunch.ending
     else if (status === 1) return phrases.lunch.startingWorking
     else return phrases.lunch.starting
   } else if (auxPeriod === 'boa tarde') {
