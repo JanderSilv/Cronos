@@ -1,0 +1,29 @@
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      height: '100vh',
+      padding: theme.spacing(4),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
+    },
+
+    watchContainer: {
+      fontSize: theme.typography.pxToRem(80),
+      fontWeight: theme.typography.fontWeightBold
+    },
+    timeBox: {
+      padding: theme.spacing(1.5, 1),
+      border: '1px solid #F5F5F5',
+      borderRadius: 5,
+      boxShadow: theme.shadows[1]
+    },
+    ms: {
+      fontSize: theme.typography.pxToRem(40)
+    }
+  })
+)
+
+export default useStyles
