@@ -1,4 +1,4 @@
-const makeGreetings = (hour: number, minute: number) => {
+const makeGreetings = (hour: number, minute: number): string => {
   if (hour >= 0 && minute >= 0 && hour < 5 && minute < 60)
     return 'Boa Madrugada'
   if (
@@ -12,7 +12,7 @@ const makeGreetings = (hour: number, minute: number) => {
     (hour >= 12 && minute >= 0 && hour >= 12 && hour < 14)
   )
     return 'Bom almoço'
-  if (hour >= 13 && hour < 18 && hour < 18 && minute < 60) return 'Boa tarde'
+  if (hour >= 13 && hour < 18 && minute < 60) return 'Boa tarde'
   if (hour >= 18 && hour < 24 && minute < 60) return 'Boa noite'
 }
 
