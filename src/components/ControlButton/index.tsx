@@ -14,7 +14,8 @@ interface Props {
   start: () => void
   stop: () => void
   reset: () => void
-  status: number
+  status: boolean
+  isResetting: boolean
 }
 
 const ControlButton = (props: Props): JSX.Element => {
@@ -33,27 +34,24 @@ const ControlButton = (props: Props): JSX.Element => {
   }
 
   const renderButton = () => {
-    switch (props.status) {
-      case 0:
-      case 2:
-        return (
-          <IconButton
-            className={[classes.button, classes.mainButton].join(' ')}
-            onClick={handleStart}
-          >
-            <PlayArrowIcon />
-          </IconButton>
-        )
-      case 1:
-        return (
-          <IconButton
-            className={[classes.button, classes.mainButton].join(' ')}
-            onClick={props.stop}
-          >
-            <PauseIcon />
-          </IconButton>
-        )
-    }
+    if (!props.status)
+      return (
+        <IconButton
+          className={[classes.button, classes.mainButton].join(' ')}
+          onClick={handleStart}
+        >
+          <PlayArrowIcon />
+        </IconButton>
+      )
+    else
+      return (
+        <IconButton
+          className={[classes.button, classes.mainButton].join(' ')}
+          onClick={props.stop}
+        >
+          <PauseIcon />
+        </IconButton>
+      )
   }
 
   return (
@@ -66,6 +64,7 @@ const ControlButton = (props: Props): JSX.Element => {
           rotate: rotate
         })}
         onClick={handleRedo}
+        disabled={props.isResetting}
       >
         <RedoIcon />
       </IconButton>

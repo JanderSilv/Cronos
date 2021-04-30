@@ -29,7 +29,7 @@ const phrases = {
 
 const makePhrases = (
   period: string,
-  status: number,
+  status: boolean,
   hour: number,
   minute: number
 ): string => {
@@ -38,23 +38,23 @@ const makePhrases = (
   const auxPeriod = period.toLowerCase()
   if (auxPeriod === 'bom dia') {
     if (hour === 11) return phrases.morning.ending
-    else if (status === 1) return phrases.morning.startingWorking
+    else if (status) return phrases.morning.startingWorking
     else return phrases.morning.starting
   } else if (auxPeriod === 'bom almoço') {
     if (hour === 13 && minute >= 40) return phrases.lunch.ending
-    else if (status === 1) return phrases.lunch.startingWorking
+    else if (status) return phrases.lunch.startingWorking
     else return phrases.lunch.starting
   } else if (auxPeriod === 'boa tarde') {
     if (hour === 17) return phrases.afternoon.ending
-    else if (status === 1) return phrases.afternoon.startingWorking
+    else if (status) return phrases.afternoon.startingWorking
     else return phrases.afternoon.starting
   } else if (auxPeriod === 'boa noite') {
     if (hour === 12 && minute >= 40) return phrases.night.ending
-    else if (status === 1) return phrases.night.startingWorking
+    else if (status) return phrases.night.startingWorking
     else return phrases.night.starting
   } else if (auxPeriod === 'boa madruga') {
     if (hour === 4) return phrases.daybreak.ending
-    else if (status === 1) return phrases.daybreak.startingWorking
+    else if (status) return phrases.daybreak.startingWorking
     else return phrases.daybreak.starting
   }
 }

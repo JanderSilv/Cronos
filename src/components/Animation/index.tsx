@@ -8,12 +8,12 @@ import {
 
 interface Props {
   period: string
-  status: number
+  status: boolean
 }
 
 const Animation = ({ period, status }: Props): JSX.Element => {
   const chooseAnimation = () => {
-    if (status === 1) return WorkingAnimation
+    if (status) return WorkingAnimation
     switch (period.toLowerCase()) {
       case 'bom dia':
       case 'boa tarde':

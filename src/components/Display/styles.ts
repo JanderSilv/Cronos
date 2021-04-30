@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: theme.shadows[1]
     },
     ms: {
+      marginLeft: theme.spacing(1),
       fontSize: theme.typography.pxToRem(40)
     }
   })
