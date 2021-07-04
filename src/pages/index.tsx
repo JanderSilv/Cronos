@@ -4,70 +4,18 @@ import Image from 'next/image'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import SettingsButton from '../components/SettingsButton'
-import StopwatchButton from '../components/StopwatchButton'
-
 import { DateTime } from 'luxon'
+
+import StopwatchReducer, { StopwatchActions } from '../reducers/Stopwatch'
+import { makeGreetings, makePhrases, parseTime } from '../utils'
+import {
+  SettingsButton,
+  StopwatchButton,
+  Display,
+  Animation,
+  ControlButton
+} from '../components'
 import useStyles from '../styles/pages'
-import Display from '../components/Display'
-import ControlButton from '../components/ControlButton'
-import makeGreetings from '../utils/functions/makeGreetings'
-import makePhrases from '../utils/functions/makePhrases'
-import Animation from '../components/Animation'
-
-export interface Time {
-  hours: number
-  minutes: number
-  seconds: number
-  milliseconds: number
-}
-
-interface StopwatchState {
-  running: boolean
-  currentTime: number
-  lastTime: number
-}
-export type StopwatchActions =
-  | { type: 'stop' }
-  | { type: 'start' }
-  | { type: 'reset' }
-  | { type: 'tick' }
-
-function StopwatchReducer(
-  state: StopwatchState,
-  action: StopwatchActions
-): StopwatchState {
-  switch (action.type) {
-    case 'reset':
-      return { running: false, currentTime: 0, lastTime: 0 }
-    case 'start':
-      return { ...state, running: true, lastTime: Date.now() }
-    case 'stop':
-      return { ...state, running: false }
-    case 'tick':
-      if (!state.running) return state
-      return {
-        ...state,
-        currentTime: state.currentTime + (Date.now() - state.lastTime),
-        lastTime: Date.now()
-      }
-  }
-}
-function parseTime(
-  time: number
-): { hours: number; minutes: number; seconds: number; milliseconds: number } {
-  const date = new Date(time)
-  const hours = date.getHours() + date.getTimezoneOffset() / 60 - 24
-  const minutes = date.getMinutes()
-  const seconds = date.getSeconds()
-  const milliseconds = date.getMilliseconds()
-  return {
-    hours,
-    minutes,
-    seconds,
-    milliseconds
-  }
-}
 
 const Home = (): JSX.Element => {
   const classes = useStyles()

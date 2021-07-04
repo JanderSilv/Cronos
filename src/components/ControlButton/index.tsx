@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import clsx from 'clsx'
 
-import { StopwatchActions } from '../../pages'
+import { StopwatchActions } from '../../reducers/Stopwatch'
 import {
   PlayArrowIcon,
   PauseIcon,
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const ControlButton = (props: Props): JSX.Element => {
-  const { handler } = props
+  const { handler, status } = props
   const classes = useStyles()
 
   const [rotate, setRotate] = useState(false)
@@ -33,7 +33,7 @@ const ControlButton = (props: Props): JSX.Element => {
   }
 
   const renderButton = () => {
-    if (!props.status)
+    if (!status)
       return (
         <IconButton
           className={[classes.button, classes.mainButton].join(' ')}

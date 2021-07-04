@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import Box from '@material-ui/core/Box'
-import { Time } from '../../pages'
+
+import { Time } from '../../utils/formatters/parseTime'
 import useStyles from './styles'
 
 interface Props {
