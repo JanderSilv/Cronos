@@ -1,10 +1,10 @@
 import { memo } from 'react'
-import { TypeTime } from '../../pages'
 import Box from '@material-ui/core/Box'
+import { Time } from '../../pages'
 import useStyles from './styles'
 
 interface Props {
-  time: TypeTime
+  time: Time
 }
 
 const Display = ({ time }: Props): JSX.Element => {
@@ -12,16 +12,19 @@ const Display = ({ time }: Props): JSX.Element => {
   return (
     <Box className={classes.watchContainer}>
       <span className={classes.timeBox}>
-        {time.h >= 10 ? time.h : '0' + time.h}
+        {time.hours.toString().padStart(2, '0')}
       </span>
       &nbsp;:&nbsp;
       <span className={classes.timeBox}>
-        {time.m >= 10 ? time.m : '0' + time.m}
+        {time.minutes.toString().padStart(2, '0')}
       </span>
       &nbsp;:&nbsp;
       <span className={classes.timeBox}>
-        {time.s >= 10 ? time.s : '0' + time.s}
+        {time.seconds.toString().padStart(2, '0')}
       </span>
+      {/* <span className={classes.ms}>
+        ,{time.milliseconds.toString().padStart(3, '0').substr(0, 2)}
+      </span> */}
     </Box>
   )
 }

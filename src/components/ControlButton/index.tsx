@@ -2,6 +2,8 @@ import { memo, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import clsx from 'clsx'
+
+import { StopwatchActions } from '../../pages'
 import {
   PlayArrowIcon,
   PauseIcon,
@@ -10,26 +12,23 @@ import {
 import useStyles from './styles'
 
 interface Props {
-  resume: () => void
-  start: () => void
-  stop: () => void
-  reset: () => void
+  handler: (action: StopwatchActions) => void
   status: boolean
-  isResetting: boolean
 }
 
 const ControlButton = (props: Props): JSX.Element => {
+  const { handler } = props
   const classes = useStyles()
 
   const [rotate, setRotate] = useState(false)
 
   const handleStart = () => {
-    props.start()
+    handler({ type: 'start' })
     setRotate(false)
   }
 
   const handleRedo = () => {
-    props.reset()
+    handler({ type: 'reset' })
     setRotate(true)
   }
 
@@ -47,7 +46,7 @@ const ControlButton = (props: Props): JSX.Element => {
       return (
         <IconButton
           className={[classes.button, classes.mainButton].join(' ')}
-          onClick={props.stop}
+          onClick={() => handler({ type: 'stop' })}
         >
           <PauseIcon />
         </IconButton>
@@ -64,7 +63,7 @@ const ControlButton = (props: Props): JSX.Element => {
           rotate: rotate
         })}
         onClick={handleRedo}
-        disabled={props.isResetting}
+        disabled={rotate}
       >
         <RedoIcon />
       </IconButton>

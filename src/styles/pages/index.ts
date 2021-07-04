@@ -18,7 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     headerGreetings: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+
+      '& span': {
+        fontWeight: theme.typography.fontWeightBold
+      }
     },
 
     watchWrapper: {

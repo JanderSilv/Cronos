@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useReducer, useState, useCallback } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -15,66 +15,95 @@ import makeGreetings from '../utils/functions/makeGreetings'
 import makePhrases from '../utils/functions/makePhrases'
 import Animation from '../components/Animation'
 
-export type TypeTime = { s: number; m: number; h: number }
+export interface Time {
+  hours: number
+  minutes: number
+  seconds: number
+  milliseconds: number
+}
+
+interface StopwatchState {
+  running: boolean
+  currentTime: number
+  lastTime: number
+}
+export type StopwatchActions =
+  | { type: 'stop' }
+  | { type: 'start' }
+  | { type: 'reset' }
+  | { type: 'tick' }
+
+function StopwatchReducer(
+  state: StopwatchState,
+  action: StopwatchActions
+): StopwatchState {
+  switch (action.type) {
+    case 'reset':
+      return { running: false, currentTime: 0, lastTime: 0 }
+    case 'start':
+      return { ...state, running: true, lastTime: Date.now() }
+    case 'stop':
+      return { ...state, running: false }
+    case 'tick':
+      if (!state.running) return state
+      return {
+        ...state,
+        currentTime: state.currentTime + (Date.now() - state.lastTime),
+        lastTime: Date.now()
+      }
+  }
+}
+function parseTime(
+  time: number
+): { hours: number; minutes: number; seconds: number; milliseconds: number } {
+  const date = new Date(time)
+  const hours = date.getHours() + date.getTimezoneOffset() / 60 - 24
+  const minutes = date.getMinutes()
+  const seconds = date.getSeconds()
+  const milliseconds = date.getMilliseconds()
+  return {
+    hours,
+    minutes,
+    seconds,
+    milliseconds
+  }
+}
 
 const Home = (): JSX.Element => {
   const classes = useStyles()
 
-  const [time, setTime] = useState({ s: 40, m: 20, h: 10 })
-  const [interval, setWatchInterval] = useState<NodeJS.Timeout>()
-  const [status, setStatus] = useState(0)
-  // Not started = 0
-  // started = 1
-  // stopped = 2
+  const [dateNow, setDateNow] = useState(DateTime.now())
+  const [state, dispatch] = useReducer(StopwatchReducer, {
+    running: false,
+    currentTime: 0,
+    lastTime: 0
+  })
 
-  const dateNow = DateTime.now()
-  const greetings = () => makeGreetings(dateNow.hour, dateNow.minute)
-
-  const start = () => {
-    clearInterval(interval)
-    run()
-    setStatus(1)
-    setWatchInterval(setInterval(run, 1000))
-  }
-
-  let updatedS = time.s
-  let updatedM = time.m
-  let updatedH = time.h
-
-  const run = () => {
-    if (updatedM > 59) {
-      updatedM = 0
-      updatedH++
+  useEffect(() => {
+    let frame: number
+    function tick() {
+      dispatch({ type: 'tick' })
+      frame = requestAnimationFrame(tick)
     }
-    if (updatedS > 59) {
-      updatedS = 0
-      updatedM++
-    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
-    updatedS++
-    return setTime({ s: updatedS, m: updatedM, h: updatedH })
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDateNow(DateTime.now())
+    }, 1000)
 
-  const rerun = () => {
-    if (updatedH !== 0) updatedH--
-    if (updatedM !== 0) updatedM--
-    if (updatedS !== 0) updatedS--
-    return setTime({ s: updatedS, m: updatedM, h: updatedH })
-  }
+    return () => clearInterval(interval)
+  }, [])
 
-  const stop = () => {
-    clearInterval(interval)
-    setStatus(2)
-  }
+  const greetings = makeGreetings(dateNow.hour, dateNow.minute)
+  const time = parseTime(state.currentTime)
 
-  const reset = () => {
-    clearInterval(interval)
-    rerun()
-    setStatus(0)
-    setWatchInterval(setInterval(rerun, 1))
-  }
-
-  const resume = () => start()
+  const handler = useCallback(
+    (action: StopwatchActions) => dispatch(action),
+    []
+  )
 
   return (
     <Box component="main" className={classes.container}>
@@ -93,12 +122,13 @@ const Home = (): JSX.Element => {
         </Box>
         <Box component="section" className={classes.headerGreetings}>
           <Box>
-            <Typography>{greetings()}, Jander</Typography>
+            <Typography>{greetings}, Jander</Typography>
             <Typography>
-              São {dateNow.toLocaleString(DateTime.TIME_24_SIMPLE)} horas.
+              São <span>{dateNow.toLocaleString(DateTime.TIME_24_SIMPLE)}</span>
+              .
             </Typography>
           </Box>
-          <Animation period={greetings()} status={status} />
+          <Animation period={greetings} status={state.running} />
         </Box>
       </Box>
 
@@ -106,17 +136,11 @@ const Home = (): JSX.Element => {
         <Box className={classes.watchContainer}>
           <Display time={time} />
           <Box className={classes.controlButtonsContainer}>
-            <ControlButton
-              start={start}
-              stop={stop}
-              resume={resume}
-              reset={reset}
-              status={status}
-            />
+            <ControlButton handler={handler} status={state.running} />
           </Box>
         </Box>
         <Typography>
-          {makePhrases(greetings(), status, dateNow.hour, dateNow.minute)}
+          {makePhrases(greetings, state.running, dateNow.hour, dateNow.minute)}
         </Typography>
       </Box>
 
