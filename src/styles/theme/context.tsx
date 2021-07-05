@@ -11,7 +11,7 @@ const ThemeContext = React.createContext<IThemeContext>(null)
 
 export const ThemeProvider: React.FC = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
-    (window
+    (typeof window !== 'undefined'
       ? window.localStorage.getItem('@Cronos:app-theme')
       : 'light') as ThemesTypes
   )
