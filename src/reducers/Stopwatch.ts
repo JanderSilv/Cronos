@@ -1,10 +1,13 @@
+import { LocalStorageKeys } from '../models/enums'
+
 export type StopwatchActions =
+  | { type: 'loadState' }
   | { type: 'stop' }
   | { type: 'start' }
   | { type: 'reset' }
   | { type: 'tick' }
 
-interface StopwatchState {
+export interface StopwatchState {
   running: boolean
   currentTime: number
   lastTime: number
@@ -15,6 +18,10 @@ const StopwatchReducer = (
   action: StopwatchActions
 ): StopwatchState => {
   switch (action.type) {
+    case 'loadState':
+      return (
+        JSON.parse(localStorage.getItem(LocalStorageKeys.state)) ?? { ...state }
+      )
     case 'reset':
       return { running: false, currentTime: 0, lastTime: 0 }
     case 'start':

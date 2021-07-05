@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { DateTime } from 'luxon'
 
 import StopwatchReducer, { StopwatchActions } from '../reducers/Stopwatch'
+import { LocalStorageKeys } from '../models/enums'
 import { makeGreetings, makePhrases, parseTime } from '../utils'
 import {
   SettingsButton,
@@ -28,8 +29,16 @@ const Home = (): JSX.Element => {
   })
 
   useEffect(() => {
+    dispatch({ type: 'loadState' })
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(LocalStorageKeys.state, JSON.stringify(state))
+  }, [state])
+
+  useEffect(() => {
     let frame: number
-    function tick() {
+    const tick = () => {
       dispatch({ type: 'tick' })
       frame = requestAnimationFrame(tick)
     }
