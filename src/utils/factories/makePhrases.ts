@@ -1,3 +1,5 @@
+import { Greetings } from '../../models/enums'
+
 const phrases = {
   morning: {
     starting: 'Tenha um bom dia!',
@@ -28,31 +30,30 @@ const phrases = {
 }
 
 const makePhrases = (
-  period: string,
+  period: Greetings,
   status: boolean,
   hour: number,
   minute: number
 ): string => {
   if (!period) return ''
 
-  const auxPeriod = period.toLowerCase()
-  if (auxPeriod === 'bom dia') {
+  if (period === Greetings.morning) {
     if (hour === 11) return phrases.morning.ending
     else if (status) return phrases.morning.startingWorking
     else return phrases.morning.starting
-  } else if (auxPeriod === 'bom almoço') {
+  } else if (period === Greetings.lunch) {
     if (hour === 13 && minute >= 40) return phrases.lunch.ending
     else if (status) return phrases.lunch.startingWorking
     else return phrases.lunch.starting
-  } else if (auxPeriod === 'boa tarde') {
+  } else if (period === Greetings.afternoon) {
     if (hour === 17) return phrases.afternoon.ending
     else if (status) return phrases.afternoon.startingWorking
     else return phrases.afternoon.starting
-  } else if (auxPeriod === 'boa noite') {
+  } else if (period === Greetings.night) {
     if (hour === 12 && minute >= 40) return phrases.night.ending
     else if (status) return phrases.night.startingWorking
     else return phrases.night.starting
-  } else if (auxPeriod === 'boa madruga') {
+  } else if (period === Greetings.daybreak) {
     if (hour === 4) return phrases.daybreak.ending
     else if (status) return phrases.daybreak.startingWorking
     else return phrases.daybreak.starting
