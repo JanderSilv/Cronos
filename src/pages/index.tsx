@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { DateTime } from 'luxon'
 
+import { useTheme } from '../hooks/useTheme'
 import StopwatchReducer, { StopwatchActions } from '../reducers/Stopwatch'
 import { LocalStorageKeys } from '../models/enums'
 import { makeGreetings, makePhrases, parseTime } from '../utils'
@@ -19,6 +20,7 @@ import {
 import useStyles from '../styles/pages'
 
 const Home = (): JSX.Element => {
+  const { currentTheme } = useTheme()
   const classes = useStyles()
 
   const [dateNow, setDateNow] = useState(DateTime.now())
@@ -70,7 +72,11 @@ const Home = (): JSX.Element => {
       <Box component="header" className={classes.header}>
         <Box component="figure">
           <Image
-            src="/assets/logo/Cronos.png"
+            src={
+              currentTheme === 'light'
+                ? '/assets/logo/Cronos.png'
+                : '/assets/logo/Cronos_White.png'
+            }
             width="131"
             height="80"
             alt="Logo do Cronos"
