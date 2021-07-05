@@ -93,7 +93,7 @@ const Home = (): JSX.Element => {
       </Box>
 
       <Box component="section" className={classes.buttonsContainer}>
-        <StopwatchButton />
+        <StopwatchButton state={state} />
         <SettingsButton />
       </Box>
     </Box>
