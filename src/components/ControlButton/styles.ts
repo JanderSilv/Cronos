@@ -33,12 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
     mainButton: {
       '& svg': {
         width: '100%',
-        maxWidth: 20,
+        maxWidth: 30,
         height: 'auto'
       }
     },
     redoButton: {
       '& svg': {
+        fill: theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.54)' : '#FFF',
         transform: 'rotateZ(0deg)',
         transition: 'transform .4s'
       },

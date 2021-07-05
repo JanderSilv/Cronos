@@ -1,16 +1,34 @@
+import { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import themes from '../styles/theme'
+import ThemeControlContext, {
+  ThemeProvider as ThemeControlProvider
+} from '../styles/theme/context'
 import GlobalCss from '../styles/global'
-import theme from '../styles/theme'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-      <CssBaseline />
-      <GlobalCss />
-    </ThemeProvider>
+    <ThemeControlProvider>
+      <ThemeControlContext.Consumer>
+        {({ currentTheme }) => (
+          <ThemeProvider theme={themes[currentTheme] || themes.light}>
+            <Component {...pageProps} />
+            <CssBaseline />
+            <GlobalCss />
+          </ThemeProvider>
+        )}
+      </ThemeControlContext.Consumer>
+    </ThemeControlProvider>
   )
 }
 

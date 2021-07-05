@@ -1,7 +1,8 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { ThemeOptions } from '@material-ui/core/styles'
 
-const theme = createMuiTheme({
+const theme: ThemeOptions = {
   palette: {
+    type: 'light',
     primary: {
       main: '#0047BA',
       light: '#2575FC',
@@ -18,6 +19,6 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'Roboto'
   }
-})
+}
 
 export default theme
