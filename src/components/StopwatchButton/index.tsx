@@ -15,8 +15,7 @@ import { DateTime } from 'luxon'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 import { StopwatchState } from '../../reducers/Stopwatch'
-import { StopwatchIcon } from '../../../public/assets/icons'
-import useCommonStyles from '../../styles/common'
+import { TimerIcon } from '../../../public/assets/icons'
 
 interface Props {
   state: StopwatchState
@@ -37,7 +36,6 @@ const getRelative = (lastTime: DateTime) =>
 
 const StopwatchButton = ({ state }: Props): JSX.Element => {
   const classes = useStyles()
-  const commonClasses = useCommonStyles()
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [times, setTimes] = useState<Time[]>([])
@@ -73,9 +71,9 @@ const StopwatchButton = ({ state }: Props): JSX.Element => {
       <Fab
         aria-describedby={id}
         onClick={handleOpen}
-        className={commonClasses.fabButton}
+        className={classes.fabButton}
       >
-        <StopwatchIcon />
+        <TimerIcon color="action" />
       </Fab>
       <Popover
         id={id}
@@ -131,5 +129,17 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: 16,
     textAlign: 'center'
+  },
+  fabButton: {
+    width: 50,
+    height: 50,
+
+    background: theme.palette.type === 'light' ? 'white' : '#00000061',
+    boxShadow: theme.shadows[1],
+    transition: 'background .2s',
+
+    '&:hover': {
+      background: theme.palette.type === 'light' ? '#d8d8d8' : '#5e5e5e'
+    }
   }
 }))
