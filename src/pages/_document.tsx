@@ -117,6 +117,22 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
           <meta name="theme-color" content="#ffffff" />
+          <meta property="og:title" content="Cronos" />
+          <meta property="og:image" content="/assets/logo/Cronos_White.png" />
+          <meta property="og:image:width" content="1024" />
+          <meta property="og:image:height" content="538" />
+          <meta property="og:site_name" content="Cronos" />
+          {/* <meta property='og:url' content='https://timesheet.waproject.com.br/' /> */}
+          <meta property="og:type" content="website" />
+          <meta property="og:locale" content="pt_BR" />
+          <meta
+            property="og:description"
+            content="Cronos é um cronomêtro com gerenciamento de pausas e estado persistente."
+          />
+          <meta
+            name="description"
+            content="Cronos é um cronomêtro com gerenciamento de pausas e estado persistente."
+          />
         </Head>
         <body>
           <Main />
