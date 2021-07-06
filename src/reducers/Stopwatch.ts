@@ -28,13 +28,16 @@ const StopwatchReducer = (
       return { ...state, running: true, lastTime: Date.now() }
     case 'stop':
       return { ...state, running: false }
-    case 'tick':
+    case 'tick': {
       if (!state.running) return state
-      return {
+      const newState = {
         ...state,
         currentTime: state.currentTime + (Date.now() - state.lastTime),
         lastTime: Date.now()
       }
+      localStorage.setItem(LocalStorageKeys.state, JSON.stringify(newState))
+      return newState
+    }
   }
 }
 

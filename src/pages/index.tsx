@@ -47,10 +47,6 @@ const Home = (): JSX.Element => {
   }, [])
 
   useEffect(() => {
-    localStorage.setItem(LocalStorageKeys.state, JSON.stringify(state))
-  }, [state])
-
-  useEffect(() => {
     let frame: number
     const tick = () => {
       dispatch({ type: 'tick' })
