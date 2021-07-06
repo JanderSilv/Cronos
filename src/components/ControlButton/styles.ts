@@ -41,7 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
       '& svg': {
         fill: theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.54)' : '#FFF',
         transform: 'rotateZ(0deg)',
-        transition: 'transform .4s'
+        transition: 'transform .4s',
+
+        '& > path': {
+          fill: 'inherit'
+        }
       },
 
       '&.rotate': {

@@ -18,11 +18,7 @@ const SettingsButton = (): JSX.Element => {
     () => [
       {
         icon:
-          currentTheme === 'dark' ? (
-            <SunIcon key="sun-icon" />
-          ) : (
-            <MoonIcon key="moon-icon" />
-          ),
+          currentTheme === 'dark' ? <SunIcon color="action" /> : <MoonIcon />,
         name: currentTheme === 'dark' ? 'Claro' : 'Escuro',
         action: toggleTheme
       }
@@ -43,7 +39,6 @@ const SettingsButton = (): JSX.Element => {
       {makeActions().map(action => (
         <SpeedDialAction
           key={action.name}
-          color="action"
           icon={action.icon}
           tooltipTitle={action.name}
           onClick={action.action}

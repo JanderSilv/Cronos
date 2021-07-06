@@ -127,11 +127,11 @@ export default class MyDocument extends Document {
           <meta property="og:locale" content="pt_BR" />
           <meta
             property="og:description"
-            content="Cronos é um cronomêtro com gerenciamento de pausas e estado persistente."
+            content="Cronos é um cronômetro com histórico de pausas e estado persistente."
           />
           <meta
             name="description"
-            content="Cronos é um cronomêtro com gerenciamento de pausas e estado persistente."
+            content="Cronos é um cronômetro com histórico de pausas e estado persistente."
           />
         </Head>
         <body>

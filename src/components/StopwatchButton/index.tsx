@@ -59,12 +59,10 @@ const StopwatchButton = ({ state }: Props): JSX.Element => {
     handlePause()
   }, [state.lastTime, state.running])
 
-  const handleOpen = (event: MouseEvent<HTMLButtonElement>) => {
-    return setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleOpen = (event: MouseEvent<HTMLButtonElement>) =>
+    setAnchorEl(event.currentTarget)
+
+  const handleClose = () => setAnchorEl(null)
 
   return (
     <div>

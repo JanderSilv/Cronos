@@ -17,7 +17,10 @@ const theme: ThemeOptions = {
     }
   },
   typography: {
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
+    button: {
+      textTransform: 'initial'
+    }
   }
 }
 

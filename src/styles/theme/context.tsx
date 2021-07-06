@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 
 export type ThemesTypes = 'light' | 'dark'
 
@@ -10,11 +10,15 @@ export interface IThemeContext {
 const ThemeContext = React.createContext<IThemeContext>(null)
 
 export const ThemeProvider: React.FC = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
-    (typeof window !== 'undefined'
-      ? window.localStorage.getItem('@Cronos:app-theme')
-      : 'light') as ThemesTypes
-  )
+  const [currentTheme, setCurrentTheme] = useState<ThemesTypes>('light')
+
+  useEffect(() => {
+    setCurrentTheme(
+      (typeof window !== 'undefined'
+        ? window.localStorage.getItem('@Cronos:app-theme')
+        : 'light') as ThemesTypes
+    )
+  }, [])
 
   const toggleTheme = useCallback(() => {
     setCurrentTheme(prevValue => {
