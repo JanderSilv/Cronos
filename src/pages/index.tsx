@@ -15,7 +15,8 @@ import {
   StopwatchButton,
   Display,
   Animation,
-  ControlButton
+  ControlButton,
+  NameDialog
 } from '../components'
 import useStyles from '../styles/pages'
 
@@ -23,6 +24,7 @@ const Home = (): JSX.Element => {
   const { currentTheme } = useTheme()
   const classes = useStyles()
 
+  const [nameState, setNameState] = useState({ name: '', isOpen: false })
   const [dateNow, setDateNow] = useState(DateTime.now())
   const [state, dispatch] = useReducer(StopwatchReducer, {
     running: false,
@@ -31,7 +33,17 @@ const Home = (): JSX.Element => {
   })
 
   useEffect(() => {
-    dispatch({ type: 'loadState' })
+    const loadState = () => dispatch({ type: 'loadState' })
+    const getName = () => {
+      const name = localStorage.getItem('@Cronos:name')
+      setNameState({
+        name,
+        isOpen: !name
+      })
+    }
+
+    getName()
+    loadState()
   }, [])
 
   useEffect(() => {
@@ -59,6 +71,15 @@ const Home = (): JSX.Element => {
   const greetings = makeGreetings(dateNow.hour, dateNow.minute)
   const time = parseTime(state.currentTime)
 
+  const handleChangeName = useCallback(
+    (name: string) =>
+      setNameState({
+        name,
+        isOpen: false
+      }),
+    []
+  )
+
   const handler = useCallback(
     (action: StopwatchActions) => dispatch(action),
     []
@@ -85,7 +106,9 @@ const Home = (): JSX.Element => {
         </Box>
         <Box component="section" className={classes.headerGreetings}>
           <Box>
-            <Typography>{greetings}, Jander</Typography>
+            <Typography>
+              {greetings}, {nameState.name}
+            </Typography>
             <Typography>
               São <span>{dateNow.toLocaleString(DateTime.TIME_24_SIMPLE)}</span>
               .
@@ -111,6 +134,11 @@ const Home = (): JSX.Element => {
         <StopwatchButton state={state} />
         <SettingsButton />
       </Box>
+
+      <NameDialog
+        isOpen={nameState.isOpen}
+        handleChangeName={handleChangeName}
+      />
     </Box>
   )
 }
