@@ -39,6 +39,21 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
 
+          {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-2R54HXNWY3"
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+  
+              gtag('config', 'G-2R54HXNWY3');`
+            }}
+          />
+
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
             rel="stylesheet"
