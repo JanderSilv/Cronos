@@ -11,8 +11,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     watchContainer: {
-      fontSize: theme.typography.pxToRem(80),
-      fontWeight: theme.typography.fontWeightBold
+      fontSize: '14vw',
+      fontWeight: theme.typography.fontWeightBold,
+
+      [theme.breakpoints.up('sm')]: {
+        fontSize: theme.typography.pxToRem(80)
+      }
     },
     timeBox: {
       padding: theme.spacing(1.5, 1),

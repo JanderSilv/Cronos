@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
     buttonsContainer: {
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+
+      [theme.breakpoints.up('md')]: {
+        flexDirection: 'column'
+      }
     },
     button: {
       padding: theme.spacing(0.5),
