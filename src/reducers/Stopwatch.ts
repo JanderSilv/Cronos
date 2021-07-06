@@ -22,8 +22,11 @@ const StopwatchReducer = (
       return (
         JSON.parse(localStorage.getItem(LocalStorageKeys.state)) ?? { ...state }
       )
-    case 'reset':
-      return { running: false, currentTime: 0, lastTime: 0 }
+    case 'reset': {
+      const newState = { running: false, currentTime: 0, lastTime: 0 }
+      localStorage.setItem(LocalStorageKeys.state, JSON.stringify(newState))
+      return newState
+    }
     case 'start':
       return { ...state, running: true, lastTime: Date.now() }
     case 'stop': {
