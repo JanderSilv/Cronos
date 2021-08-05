@@ -27,7 +27,6 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     const loadState = () => dispatch({ type: 'loadState' })
-
     loadState()
   }, [])
 

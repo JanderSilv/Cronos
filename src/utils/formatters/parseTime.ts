@@ -5,9 +5,17 @@ export interface Time {
   milliseconds: number
 }
 
+const makeHours = (date: Date) => {
+  const hours = date.getHours() + date.getTimezoneOffset() / 60 - 24
+  if (hours < 0) {
+    return hours + 24
+  }
+  return hours
+}
+
 const parseTime = (time: number): Time => {
   const date = new Date(time)
-  const hours = date.getHours() + date.getTimezoneOffset() / 60 - 24
+  const hours = makeHours(date)
   const minutes = date.getMinutes()
   const seconds = date.getSeconds()
   const milliseconds = date.getMilliseconds()
