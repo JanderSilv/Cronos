@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { PausedTimesProvider } from '../contexts/PausedTimesContext'
 import themes from '../styles/theme'
 import ThemeControlContext, {
   ThemeProvider as ThemeControlProvider
@@ -22,9 +23,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       <ThemeControlContext.Consumer>
         {({ currentTheme }) => (
           <ThemeProvider theme={themes[currentTheme] || themes.light}>
-            <Component {...pageProps} />
-            <CssBaseline />
-            <GlobalCss />
+            <PausedTimesProvider>
+              <Component {...pageProps} />
+              <CssBaseline />
+              <GlobalCss />
+            </PausedTimesProvider>
           </ThemeProvider>
         )}
       </ThemeControlContext.Consumer>

@@ -3,7 +3,9 @@ import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import clsx from 'clsx'
 
-import { StopwatchActions } from '../../reducers/Stopwatch'
+import { usePausedTimes } from '../../hooks/usePausedTimes'
+import { StopwatchActions, StopwatchState } from '../../reducers/Stopwatch'
+
 import {
   PlayArrowIcon,
   PauseIcon,
@@ -13,11 +15,12 @@ import useStyles from './styles'
 
 interface Props {
   handler: (action: StopwatchActions) => void
-  status: boolean
+  state: StopwatchState
 }
 
 const ControlButton = (props: Props): JSX.Element => {
-  const { handler, status } = props
+  const { handler, state } = props
+  const { handleSaveTime, resetPausedTimes } = usePausedTimes()
   const classes = useStyles()
 
   const [rotate, setRotate] = useState(false)
@@ -27,13 +30,19 @@ const ControlButton = (props: Props): JSX.Element => {
     setRotate(false)
   }
 
+  const handlePause = () => {
+    handler({ type: 'stop' })
+    handleSaveTime(state)
+  }
+
   const handleRedo = () => {
     handler({ type: 'reset' })
     setRotate(true)
+    resetPausedTimes()
   }
 
   const renderButton = () => {
-    if (!status)
+    if (!state.running)
       return (
         <IconButton
           className={[classes.button, classes.mainButton].join(' ')}
@@ -46,7 +55,7 @@ const ControlButton = (props: Props): JSX.Element => {
       return (
         <IconButton
           className={[classes.button, classes.mainButton].join(' ')}
-          onClick={() => handler({ type: 'stop' })}
+          onClick={handlePause}
         >
           <PauseIcon />
         </IconButton>

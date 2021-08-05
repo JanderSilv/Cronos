@@ -68,7 +68,7 @@ const Home = (): JSX.Element => {
         <Box className={classes.watchContainer}>
           <Display time={time} />
           <Box className={classes.controlButtonsContainer}>
-            <ControlButton handler={handler} status={state.running} />
+            <ControlButton handler={handler} state={state} />
           </Box>
         </Box>
         <Typography id="phrase">
@@ -77,7 +77,7 @@ const Home = (): JSX.Element => {
       </Box>
 
       <Box component="section" className={classes.buttonsContainer}>
-        <StopwatchButton state={state} />
+        <StopwatchButton />
         <SettingsButton />
       </Box>
     </Box>
