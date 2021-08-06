@@ -4,9 +4,19 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useTheme } from '../../hooks/useTheme'
-import { SettingsIcon, MoonIcon, SunIcon } from '../../../public/assets/icons'
+import { InfoDialogProvider } from '../../contexts/InfoDialogContext'
+import { useInfoDialog } from '../../hooks/useInfoDialog'
+
+import {
+  SettingsIcon,
+  MoonIcon,
+  SunIcon,
+  GitHubIcon,
+  InfoOutlinedIcon
+} from '../../../public/assets/icons'
 
 const SettingsButton = (): JSX.Element => {
+  const { handleOpen: handleOpenInfoDialog } = useInfoDialog()
   const { toggleTheme, currentTheme } = useTheme()
   const classes = useStyles()
 
@@ -21,9 +31,19 @@ const SettingsButton = (): JSX.Element => {
           currentTheme === 'dark' ? <SunIcon color="action" /> : <MoonIcon />,
         name: currentTheme === 'dark' ? 'Claro' : 'Escuro',
         action: toggleTheme
+      },
+      {
+        icon: <InfoOutlinedIcon color="action" />,
+        name: 'Informações',
+        action: () => handleOpenInfoDialog()
+      },
+      {
+        icon: <GitHubIcon color="action" />,
+        name: 'GitHub',
+        action: () => window.open('https://github.com/JanderSilv/Cronos')
       }
     ],
-    [currentTheme, toggleTheme]
+    [currentTheme, handleOpenInfoDialog, toggleTheme]
   )
 
   return (
@@ -49,7 +69,13 @@ const SettingsButton = (): JSX.Element => {
   )
 }
 
-export default memo(SettingsButton)
+const SettingsButtonWithContext = () => (
+  <InfoDialogProvider>
+    <SettingsButton />
+  </InfoDialogProvider>
+)
+
+export default memo(SettingsButtonWithContext)
 
 const useStyles = makeStyles(theme => ({
   fabButton: {
