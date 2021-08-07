@@ -67,10 +67,12 @@ const Home = (): JSX.Element => {
       <Box component="section" className={classes.watchWrapper}>
         <Box className={classes.watchContainer}>
           <Display time={time} />
+
           <Box className={classes.controlButtonsContainer}>
             <ControlButton handler={handler} state={state} />
           </Box>
         </Box>
+
         <Typography id="phrase">
           {makePhrases(greetings, state.running, dateNow.hour, dateNow.minute)}
         </Typography>

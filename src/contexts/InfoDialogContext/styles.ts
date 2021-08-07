@@ -2,8 +2,12 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   dialog: {
-    padding: theme.spacing(3, 8, 4),
-    position: 'relative'
+    padding: theme.spacing(3, 4, 4),
+    position: 'relative',
+
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(3, 8, 4)
+    }
   },
   closeButton: {
     position: 'absolute',
